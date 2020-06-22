@@ -349,19 +349,10 @@ class GRUModel(nn.Module):
         self.fc = nn.Linear(self.hidden_dim, 256)
     def forward(self, x):
         
-        # Initialize hidden state with zeros
-        #######################
-        #  USE GPU FOR MODEL  #
-        #######################
-        #print(x.shape,"x.shape")100, 28, 28
+
         if torch.cuda.is_available():
             h0 = torch.zeros((self.layer_dim)*2, x.size(0), self.hidden_dim).requires_grad_().to(device)
 
-            #h0 = Variable(torch.zeros(self.layer_dim, x.size(0), self.hidden_dim).cuda())
-        #else:
-            #h0 = Variable(torch.zeros(self.layer_dim, x.size(0), self.hidden_dim))
-         
-       
 
         out, hn= self.gru_cell(x, h0.detach())
 
